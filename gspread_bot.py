@@ -52,6 +52,9 @@ for record in records:
     for team in top_teams:
         if team in teams_dict:
             teams_dict[team].append(record)
+        elif team == "Design (Graphic Designer roles only)":
+            teams_dict["Design"].append(record)
+            
 
 # Create or update sheets for each team
 for team, records in teams_dict.items():
