@@ -1,10 +1,10 @@
 import gspread  # Google Sheets API
 
 # Authenticate using the service account
-gc = gspread.service_account(filename="credentials.json")
+gc = gspread.service_account()
 
 # Open the specific Google Spreadsheet
-gsheet = gc.open("FQ2024 - Director Recruitment 2025")
+gsheet = gc.open("2026 Director Applications Typeform")
 test_sheet = gsheet.worksheet("Bot Parsing Copy")
 
 # Get all records from the sheet
@@ -14,18 +14,30 @@ expected_headers = [
     "UC Davis Email Address",
     "Major",
     "Graduation Date?",
-    "Have you attended HackDavis?",
-    "Why do you want to join the HackDavis team? (150 words max)",
-    "What does \"social good\" mean to you? (150 words max)",
-    "What is a hackathon? (150 words max)",
-    "What are your time commitments for the 2024-2025 school year?",
+    "Why do you want to join HackDavis?",
+    "Have you attended HackDavis before?",
+    "What is a hackathon?",
+    "What are your time commitments (current and potential new ones) for the 2025-2026 school year?",
     "Tell us something special about *YOU*!",
     "What team(s) are you interested in joining? ",
-    "What elevant experience & skills do you bring to the teams you've selected that make you a strong candidate? (150 words max)",
+    "Why are you interested in joining the team(s) you selected?"
+    "[TECHNICAL] Describe in detail a project you have worked on. If it was a team project, specify your contribution."
+    "[TECHNICAL] Describe your experience with React.js and/or Next.js. What features of these tools do you like or not like?",
+    "[OPERATIONS] Suppose a food vendor reaches out 2 weeks before the HackDavis hackathon, wanting to offer their services. This new vendor has a cheaper per person cost than at least one of the already selected and agreed upon vendors. What do you do?"
+    "[MARKETING] What are some new and innovative ways for HD to market and build presence amongst the community?",
+    "[SPONSORSHIP] How would you go about reaching out to potential sponsorships for HackDavis?",
+    "[SPONSORSHIP] How would you pitch HackDavis to a potential sponsor?",
+    "[FINANCE] What is your experience with budgeting, expense tracking, or filing taxes?",
+    "[FINANCE] Do you have any experience in grant writing? How would you go about finding grants to apply to?",
+    "[EXTERNAL] How would you go about planning a workshop?",
+    "[EXTERNAL] HackDavis invites industry professionals to judge the hackathon. How would you go about vetting judges in a timely manner?",
+    "[DESIGN] What realm of design are you interested in?",
+    "[DESIGN] Why are you interested in the realm(s) of design you chose in the previous question?",
+    "[DESIGN] Please provide a link to your portfolio.",
     "Please provide a copy of your resume",
     "LinkedIn?",
     "GitHub?",
-    "Personal Website/Portfolio?",
+    "Personal website?"
     "utm_source",
     "Submitted At",
     "Token",
@@ -33,17 +45,17 @@ expected_headers = [
 
 category_column = "What team(s) are you interested in joining? "
 
-records = test_sheet.get_all_records(expected_headers=expected_headers)
+records = test_sheet.get_all_records()
 
 # Process records to filter based on top 3 teams interested in joining
 teams_dict = {
-    # "Technical": [],
+    "Technical": [],
     "Operations": [],
     "Sponsorship": [],
     "Design": [],
-    # "Marketing": [],
-    # "Finance": [],
-    # "External": [],
+    "Marketing": [],
+    "Finance": [],
+    "External": [],
 }
 
 for record in records:
@@ -76,3 +88,5 @@ for team, records in teams_dict.items():
         )
 
 print("Sheets updated with filtered team records.")
+print(f"Found {len(records)} records")
+print(records[0] if records else "No data found.")
