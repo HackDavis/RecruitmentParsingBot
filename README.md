@@ -24,4 +24,6 @@ Then change the name of the worksheet in the next line to the name of the worksh
 
 Note: Make sure you have python venv installed in order to run the script
 
-Run ```python gspread_bot.py```
+1. ```python3 -m venv venv```
+2. ```source venv/bin/activate```
+3. Run script: ```python3 gspread_bot.py```
